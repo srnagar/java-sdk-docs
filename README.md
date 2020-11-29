@@ -21,11 +21,11 @@ Planned structure is as follows:
     * [java.util.logging](java-util-logging.md)
     * [Logback](logback.md)
     * [Log4J](log4j.md)
-  * Integrations
-    * [Spring](https://docs.microsoft.com/azure/developer/java/spring-framework/spring-boot-starters-for-azure)
-    * [MicroProfile](https://docs.microsoft.com/azure/developer/java/eclipse-microprofile/)
-  * Troubleshooting
-    * [Network issues](troubleshooting_network.md)
+* Integrations
+  * [Spring](https://docs.microsoft.com/azure/developer/java/spring-framework/spring-boot-starters-for-azure)
+  * [MicroProfile](https://docs.microsoft.com/azure/developer/java/eclipse-microprofile/)
+* Troubleshooting
+  * [Network issues](troubleshooting_network.md)
 * Quick Starts
   * (Links to Java SDK track two quick starts for each library)
 * Code Samples
