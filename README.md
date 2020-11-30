@@ -13,9 +13,11 @@ Planned structure is as follows:
     * [Serialization](serialization.md)
     * [Proxying](proxying.md)
     * [Tracing](tracing.md)
-  * Identity & Authentication
-    * [Overview](identity_overview.md)
-    * [Examples](identity_examples.md)  
+  * Identity & Authentication (Newly written content borrowing from existing content [here](identity_overview.md) and [here](identity_examples.md))
+    * [Authenticate with Azure using Azure Identity](identity.md)
+    * [Managed identity authentication](identity_managed_auth.md)
+    * [Service principal authentication](identity_service_principal_auth.md)
+    * [Developer environment authentication](identity_env_auth.md)
   * Logging
     * [Overview](logging.md)
     * [java.util.logging](java-util-logging.md)
@@ -34,5 +36,9 @@ Planned structure is as follows:
 
 ## Future Topics
 
-* [Context](context.md)
-* [Configuration](configuration.md)
+* Common concepts
+  * [Context](context.md)
+  * [Configuration](configuration.md)
+* Identity & Authentication
+  * Authenticating with Azure Stack
+  * Troubleshooting authentication issues
