@@ -1,3 +1,3 @@
-Managed Identity Authentication (Separate page)
+# Managed identity authentication
                     
--- Cover details of MI auth, supported services and code samples (Recommended for Prod Env is Azure ervice supports it.)
+* Cover details of MI auth, supported services and code samples (Recommended for Prod Env if Azure ervice supports it.)
