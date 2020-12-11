@@ -31,6 +31,7 @@ Planned structure is as follows:
 * Quick Starts
   * (Links to Java SDK track two quick starts for each library)
 * Code Samples
+  * [Samples for Management Libraries](https://github.com/Azure/azure-sdk-for-java/blob/master/sdk/resourcemanager/docs/SAMPLE.md)
   * (Updated list of code samples that are for track two Java SDKs)
 * [Reference](https://docs.microsoft.com/java/api/overview/azure/?view=azure-java-stable)
 
