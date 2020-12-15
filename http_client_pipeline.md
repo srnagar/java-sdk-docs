@@ -83,6 +83,15 @@ BlobClient blobClient = new BlobClientBuilder()
     .build();
 ```
 
+For management libraries, the HttpClient can be set during Manager configuration.
+
+```java
+AzureResourceManager azureResourceManager = AzureResourceManager.configure()
+    .withHttpClient(httpClient)
+    .authenticate(credential, profile)
+    .withDefaultSubscription();
+```
+
 #### Customizing retry policies
 
 > TODO
