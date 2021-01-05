@@ -2,8 +2,11 @@
 
 The Azure Identity library provides Azure Active Directory token authentication support for applicaions hosted on Azure through a a set of TokenCredential implementations.
 
+* [Default Azure Credential](#default-azure-credential)
+* [Managed Identity Credential](#managed-identity-credential)
 
-## DefaultAzureCredential
+
+## Default Azure Credential
 The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
 
 ![DefaultAzureCredential authentication flow](https://github.com/Azure/azure-sdk-for-java/raw/master/sdk/identity/azure-identity/images/defaultazurecredential.png)
@@ -84,3 +87,83 @@ SecretClient client = new SecretClientBuilder()
 .buildClient();
 }
 ```
+
+## Environment Variables
+`DefaultAzureCredential` and `EnvironmentCredential` can be configured with environment variables. Each type of authentication requires values for specific variables:
+
+#### Service principal with secret
+<table border="1" width="100%">
+<thead>
+<tr>
+<th>variable name</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AZURE_CLIENT_ID</code></td>
+<td>id of an Azure Active Directory application</td>
+</tr>
+<tr>
+<td><code>AZURE_TENANT_ID</code></td>
+<td>id of the application's Azure Active Directory tenant</td>
+</tr>
+<tr>
+<td><code>AZURE_CLIENT_SECRET</code></td>
+<td>one of the application's client secrets</td>
+</tr>
+</tbody>
+</table>
+
+#### Service principal with certificate
+<table border="1" width="100%">
+<thead>
+<tr>
+<th>variable name</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AZURE_CLIENT_ID</code></td>
+<td>id of an Azure Active Directory application</td>
+</tr>
+<tr>
+<td><code>AZURE_TENANT_ID</code></td>
+<td>id of the application's Azure Active Directory tenant</td>
+</tr>
+<tr>
+<td><code>AZURE_CLIENT_CERTIFICATE_PATH</code></td>
+<td>path to a PEM-encoded certificate file including private key (without password protection)</td>
+</tr>
+</tbody>
+</table>
+
+#### Username and password
+<table border="1" width="100%">
+<thead>
+<tr>
+<th>variable name</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AZURE_CLIENT_ID</code></td>
+<td>id of an Azure Active Directory application</td>
+</tr>
+<tr>
+<td><code>AZURE_USERNAME</code></td>
+<td>a username (usually an email address)</td>
+</tr>
+<tr>
+<td><code>AZURE_PASSWORD</code></td>
+<td>that user's password</td>
+</tr>
+</tbody>
+</table>
+
+Configuration is attempted in the above order. For example, if values for a client secret and certificate are both present, the client secret will be used.
+
+<!-- LINKS -->
+[secrets_client_library]: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/keyvault/azure-security-keyvault-secrets
