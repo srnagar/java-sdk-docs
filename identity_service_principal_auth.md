@@ -5,6 +5,8 @@ The Azure Identity library provides Azure Active Directory token authentication 
 * [Client Secret Credential](#client-secret-credential)
 * [Client Certificate Credential](#client-certificate-credential)
 
+More conceptual details can be found here for [Service principal authentication](https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals).
+
 
 ## Creating a Service Principal with the Azure CLI
 Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
