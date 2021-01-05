@@ -2,8 +2,8 @@
 
 The Azure Identity library provides Azure Active Directory token authentication support via Service Principal through a a set of TokenCredential implementations.
 
-* Client Secret Credential
-* Client Certificate Credential
+* [Client Secret Credential](#client-secret-credential)
+* [Client Certificate Credential](#client-certificate-credential)
 
 
 ## Creating a Service Principal with the Azure CLI
@@ -41,16 +41,16 @@ This credential authenticates the created service principal through its client s
 */
 public void createClientSecretCredential() {
 ClientSecretCredential clientSecretCredential = new ClientSecretCredentialBuilder()
-.clientId("<YOUR_CLIENT_ID>")
-.clientSecret("<YOUR_CLIENT_SECRET>")
-.tenantId("<YOUR_TENANT_ID>")
-.build();
+  .clientId("<YOUR_CLIENT_ID>")
+  .clientSecret("<YOUR_CLIENT_SECRET>")
+  .tenantId("<YOUR_TENANT_ID>")
+  .build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(clientSecretCredential)
-.buildClient();
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(clientSecretCredential)
+  .buildClient();
 }
 ```
 
@@ -63,17 +63,22 @@ This credential authenticates the created service principal through its client c
 */
 public void createClientCertificateCredential() {
 ClientCertificateCredential clientCertificateCredential = new ClientCertificateCredentialBuilder()
-.clientId("<YOUR_CLIENT_ID>")
-.pemCertificate("<PATH TO PEM CERTIFICATE>")
-// choose between either a PEM certificate or a PFX certificate
-//.pfxCertificate("<PATH TO PFX CERTIFICATE>", "PFX CERTIFICATE PASSWORD")
-.tenantId("<YOUR_TENANT_ID>")
-.build();
+  .clientId("<YOUR_CLIENT_ID>")
+  .pemCertificate("<PATH TO PEM CERTIFICATE>")
+  // choose between either a PEM certificate or a PFX certificate
+  //.pfxCertificate("<PATH TO PFX CERTIFICATE>", "PFX CERTIFICATE PASSWORD")
+  .tenantId("<YOUR_TENANT_ID>")
+  .build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(clientCertificateCredential)
-.buildClient();
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(clientCertificateCredential)
+  .buildClient();
 }
 ```
+
+<!-- LINKS -->
+[azure_cli]: https://docs.microsoft.com/cli/azure
+[secrets_client_library]: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/keyvault/azure-security-keyvault-secrets
+
