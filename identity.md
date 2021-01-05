@@ -3,39 +3,25 @@
 The Azure Identity library provides Azure Active Directory token authentication support across the Azure SDK. It provides a set of TokenCredential implementations which can be used to construct Azure SDK clients which support AAD token authentication.
 
 This library currently supports:
-- [Service principal authentication](https://docs.microsoft.com/azure/active-directory/develop/app-objects-and-service-principals)
-- [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview)
-- [Device code authentication](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code)
-- Interactive browser authentication, based on [OAuth2 authentication code](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-- [Username + password authentication](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth-ropc)
-- IntelliJ authentication, with the login information saved in Azure Toolkit for IntelliJ
-- Visual Studio Code authentication, with the login information saved in Azure plugin for Visual Studio Code
-- Azure CLI authentication, with the login information saved in Azure CLI
-- Shared Token Cache credential, which shares login information with Visual Studio, Azure CLI, and more
-
-[Source code][source] | [API reference documentation][javadoc] | [Azure Active Directory documentation][aad_doc]
+- [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
+    * IntelliJ authentication, with the login information saved in Azure Toolkit for IntelliJ
+    * Visual Studio Code authentication, with the login information saved in Azure plugin for Visual Studio Code
+    * Azure CLI authentication, with the login information saved in Azure CLI
+- [Authenticate with Service Principal](./identity_service_principal_auth.md)
+    * Client Secret Authentiation
+    * Client Certificate Authentication
+- [Authenticate Spplications hosted in Azure](./identity_azure_hosted_auth.md)
+    * Default Azure Credential Authentication
+    * Managed Identity Authentication
+- [Authenticate with User Credentials](./identity_user_auth.md)
+    * Interactive browser authentication
+    * Device code authentication
+    * Username password authentication
 
 ## Getting started
 ### Include the package
 
-Maven dependency for Azure Secret Client library. Add it to your project's pom file.
-
-```xml
-<dependency>
-<groupId>com.azure</groupId>
-<artifactId>azure-identity</artifactId>
-<version>1.2.1</version>
-</dependency>
-```
-
-### Prerequisites
-* A [Java Development Kit (JDK)][jdk_link], version 8 or later.
-* An [Azure subscription][azure_sub].
-* The Azure CLI can also be useful for authenticating in a development environment, creating accounts, and managing account roles.
-
-### Authenticate the client
-
-When debugging and executing code locally it is typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools which can be used to perform this authentication in your development environment. You can find instructions here to [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
+The Maven dependency for Azure Identity Client library can be found [here](https://search.maven.org/artifact/com.azure/azure-identity).
 
 ## Key concepts
 ### Credentials
@@ -47,94 +33,24 @@ The Azure Identity library focuses on OAuth authentication with Azure Active dir
 See [Credential Classes](#credential-classes) for a complete list of available credential classes.
 
 ### DefaultAzureCredential
-The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. The `DefaultAzureCredential` will attempt to authenticate via the following mechanisms in order.
+The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in the Azure Cloud. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment. Further details and examples of using `DefaultAzureCredential` can be found [here](identity_azure_hosted_auth.md#default-azure-credential).
 
-![DefaultAzureCredential authentication flow](https://github.com/Azure/azure-sdk-for-java/raw/master/sdk/identity/azure-identity/images/defaultazurecredential.png)
+## Authenticating Azure Client Libraries
 
-- Environment - The `DefaultAzureCredential` will read account information specified via [environment variables](#environment-variables) and use it to authenticate.
-- Managed Identity - If the application is deployed to an Azure host with Managed Identity enabled, the `DefaultAzureCredential` will authenticate with that account.
-- IntelliJ - If the developer has authenticated via Azure Toolkit for IntelliJ, the `DefaultAzureCredential` will authenticate with that account.
-- Visual Studio Code - If the developer has authenticated via the Visual Studio Code Azure Account plugin, the `DefaultAzureCredential` will authenticate with that account.
-- Azure CLI - If the developer has authenticated an account via the Azure CLI `az login` command, the `DefaultAzureCredential` will authenticate with that account.
+Azure Java client libraries support all `TokenCredential` implementations provided by Azure Identity library.
 
-## Examples
-You can find more examples of authenticating with different Token Credentials below:
+### Examples
+You can find examples of authenticating Azure client libraries with different Token Credential implementations below:
 
 * [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
 * [Authenticate with Service Principal](./identity_service_principal_auth.md)
-* [Authenticate applications hosted in Azure](./identity_azure_hosted_auth.md)
+* [Authenticate Applications hosted in Azure](./identity_azure_hosted_auth.md)
 * [Authenticate with User Credentials](./identity_user_auth.md)
 
 
-### Authenticating with `DefaultAzureCredential`
-This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`. There's also [a compilable sample](https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/keyvault/azure-security-keyvault-secrets/src/samples/java/com/azure/security/keyvault/secrets/IdentityReadmeSamples.java) to create a Key Vault secret client you can copy-paste.
-
-```java
-/**
-* The default credential first checks environment variables for configuration.
-* If environment configuration is incomplete, it will try managed identity.
-*/
-public void createDefaultAzureCredential() {
-DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().build();
-
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(defaultCredential)
-  .buildClient();
-}
-```
-
-See more how to configure the `DefaultAzureCredential` on your workstation or Azure in [Configure DefaultAzureCredential](./identity_azure_hosted_auth.md#configure-defaultazurecredential).
-
-### Authenticating a user assigned managed identity with `DefaultAzureCredential`
-This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, deployed to an Azure resource with a user assigned managed identity configured.
-
-See more about how to configure a user assigned managed identity for an Azure resource in [Enable managed identity for Azure resources](./identity_azure_hosted_auth.md#configure-managedidentitycredential).
-
-```java
-/**
-* The default credential will use the user assigned managed identity with the specified client ID.
-*/
-public void createDefaultAzureCredentialForUserAssignedManagedIdentity() {
-DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
-  .managedIdentityClientId("<MANAGED_IDENTITY_CLIENT_ID>")
-  .build();
-
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(defaultCredential)
-  .buildClient();
-}
-```
-
-### Authenticating a user in Azure Toolkit for IntelliJ with `DefaultAzureCredential`
-This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, on a workstation with IntelliJ IDEA installed, and the user has signed in with an Azure account to the Azure Toolkit for IntelliJ.
-
-See more about how to configure your IntelliJ IDEA in [Sign in Azure Toolkit for IntelliJ for IntelliJCredential](./identity_env_auth.md#sign-in-azure-toolkit-for-intellij-for-intellijcredential).
-
-```java
-/**
-* The default credential will use the KeePass database path to find the user account in IntelliJ on Windows.
-*/
-public void createDefaultAzureCredentialForIntelliJ() {
-DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
-// KeePass configuration required only for Windows. No configuration needed for Linux / Mac
-  .intelliJKeePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
-  .build();
-
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(defaultCredential)
-  .buildClient();
-}
-```
-
 ## Authenticating Azure Management Libraries
 
-Azure Java management libraries share all `TokenCredential` support provided by Azure Identity library.
+Azure Java management libraries support all `TokenCredential` implementations provided by Azure Identity library.
 
 ### Set up your environment for authentication on management libraries
 
