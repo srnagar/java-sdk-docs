@@ -14,7 +14,7 @@ Planned structure is as follows:
     * [Tracing](tracing.md)
   * Identity & Authentication (Newly written content borrowing from existing content [here](identity_overview.md) and [here](identity_examples.md))
     * [Authenticate with Azure using Azure Identity](identity.md)
-    * [Authenticating with Azure in Developer Environment](identity_env_auth.md)
+    * [Azure Authentication in Development Environments](identity_env_auth.md)
     * [Authenticating Azure Hosted Applications](identity_azure_hosted_auth.md)
     * [Authenticating with Service Principal](identity_service_principal_auth.md)
     * [Authenticating with User Credentials](identity_user_auth.md)
