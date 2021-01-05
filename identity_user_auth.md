@@ -2,9 +2,9 @@
 
 The Azure Identity library provides Azure Active Directory token authentication support for applications running locally on developer machines through a a set of TokenCredential implementations.
 
-* Device Code Credential
-* Interactive Browser Credential
-* Username Password Credential
+* [Device Code Credential](#device-code-credential)
+* [Interactive Browser Credential](#interactive-browser-credential)
+* [Username Password Credential](#username-password-credential)
 
 
 ## Device Code Credential
@@ -35,17 +35,16 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 */
 public void createDeviceCodeCredential() {
 DeviceCodeCredential deviceCodeCredential = new DeviceCodeCredentialBuilder()
-.challengeConsumer(challenge -> {
-// lets user know of the challenge
-System.out.println(challenge.getMessage());
-})
-.build();
+    .challengeConsumer(challenge -> {
+    // lets user know of the challenge
+    System.out.println(challenge.getMessage());
+    }).build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
-.credential(deviceCodeCredential)
-.buildClient();
+    .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
+    .credential(deviceCodeCredential)
+    .buildClient();
 }
 ```
 
@@ -68,15 +67,15 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 */
 public void createInteractiveBrowserCredential() {
 InteractiveBrowserCredential interactiveBrowserCredential = new InteractiveBrowserCredentialBuilder()
-.clientId("<YOUR_APP_CLIENT ID>")
-.redirectUrl("YOUR_APP_REGISTERED_REDIRECT_URL")
-.build();
+    .clientId("<YOUR_APP_CLIENT ID>")
+    .redirectUrl("YOUR_APP_REGISTERED_REDIRECT_URL")
+    .build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
-.credential(interactiveBrowserCredential)
-.buildClient();
+    .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
+    .credential(interactiveBrowserCredential)
+    .buildClient();
 }
 ```
 
@@ -101,3 +100,6 @@ SecretClient client = new SecretClientBuilder()
     .buildClient();
 }
 ```
+
+<!-- LINKS -->
+[secrets_client_library]: https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/keyvault/azure-security-keyvault-secrets
