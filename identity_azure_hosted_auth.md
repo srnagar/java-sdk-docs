@@ -48,7 +48,9 @@ SecretClient client = new SecretClientBuilder()
 ```
 
 ## Managed Identity Credential
-The Managed Identity authenticates the managed identity (system or user assigned) of an Azure resource. So, if the application is running inside an Azure resource that supports Managed Identity through `IDENTITY/MSI` and/or `IMDS` endpoints, then this credential will get your application authenticated and offers a great secretless authentication experience.
+The Managed Identity authenticates the managed identity (system or user assigned) of an Azure resource. So, if the application is running inside an Azure resource that supports Managed Identity through `IDENTITY/MSI` and/or `IMDS` endpoints, then this credential will get your application authenticated and offers a great secretless authentication experience. 
+
+More condeptual details can be found here for [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview).
 
 ### Configure `ManagedIdentityCredential`
 
