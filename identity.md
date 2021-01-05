@@ -3,14 +3,14 @@
 The Azure Identity library provides Azure Active Directory token authentication support across the Azure SDK. It provides a set of TokenCredential implementations which can be used to construct Azure SDK clients which support AAD token authentication.
 
 This library currently supports:
-- [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
+- [Azure Authentication in Development Environments](./identity_env_auth.md)
     * IntelliJ authentication, with the login information saved in Azure Toolkit for IntelliJ
     * Visual Studio Code authentication, with the login information saved in Azure plugin for Visual Studio Code
     * Azure CLI authentication, with the login information saved in Azure CLI
 - [Authenticate with Service Principal](./identity_service_principal_auth.md)
     * Client Secret Authentiation
     * Client Certificate Authentication
-- [Authenticate Spplications hosted in Azure](./identity_azure_hosted_auth.md)
+- [Authenticate Applications hosted in Azure](./identity_azure_hosted_auth.md)
     * Default Azure Credential Authentication
     * Managed Identity Authentication
 - [Authenticate with User Credentials](./identity_user_auth.md)
@@ -42,7 +42,7 @@ Azure Java client libraries support all `TokenCredential` implementations provid
 ### Examples
 You can find examples of authenticating Azure client libraries with different Token Credential implementations below:
 
-* [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
+* [Azure Authentication in Development Environments](./identity_env_auth.md)
 * [Authenticate with Service Principal](./identity_service_principal_auth.md)
 * [Authenticate Applications hosted in Azure](./identity_azure_hosted_auth.md)
 * [Authenticate with User Credentials](./identity_user_auth.md)
