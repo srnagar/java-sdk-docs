@@ -132,6 +132,36 @@ SecretClient client = new SecretClientBuilder()
 }
 ```
 
+## Authenticating Azure Management Libraries
+
+Azure Java management libraries share all `TokenCredential` support provided by Azure Identity library.
+
+### Set up your environment for authentication on management libraries
+
+In addition to the `TokenCredential`, the subscription ID of your [Azure subscription](https://docs.microsoft.com/learn/modules/create-an-azure-account/4-multiple-subscriptions) is required by the management libraries for managing the Azure resources on that subscription.
+
+The subscription IDs can be find on the [Subscriptions page in the Azure portal](https://portal.azure.com/#blade/Microsoft_Azure_Billing/SubscriptionsBlade).
+
+Alternatively, use the [Azure CLI][azure_cli] snippet below to get subscription IDs.
+
+```bash
+az account list --output table
+```
+
+The subscription ID can be set to environment variable `AZURE_SUBSCRIPTION_ID`.
+It will be picked up by `AzureProfile` as the default subscription ID, during the creation of `Manager` service API similar to the following code: 
+
+### Authenticate Management Libraries
+The `DefaultAzureCredential` is used in the example below to authenticate `AzureResourceManager` in Azure Management library. Other Token Credential implementations offered in Identity library can be used here as well in place of `DefaultAzureCredential`.
+
+```java
+AzureResourceManager azureResourceManager = AzureResourceManager
+    .authenticate(
+        new DefaultAzureCredentialBuilder().build(),
+        new AzureProfile(AzureEnvironment.AZURE))
+    .withDefaultSubscription();
+```
+
 ## Environment Variables
 `DefaultAzureCredential` and `EnvironmentCredential` can be configured with environment variables. Each type of authentication requires values for specific variables:
 
