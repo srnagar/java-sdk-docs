@@ -1,4 +1,4 @@
-# Authenticating with Azure in Developer Environment
+# Azure Authentication in Development Environments
 
 The Azure Identity library provides Azure Active Directory token authentication support for applications running locally on developer machines through a a set of TokenCredential implementations.
 
