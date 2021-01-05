@@ -10,7 +10,6 @@ Planned structure is as follows:
     * [Asynchronous programming](asynchronous_programming.md)
     * [Pagination & iteration](pagination.md)
     * [Long-Running operations](long_running_operations.md)
-    * [Serialization](serialization.md)
     * [Proxying](proxying.md)
     * [Tracing](tracing.md)
   * Identity & Authentication (Newly written content borrowing from existing content [here](identity_overview.md) and [here](identity_examples.md))
@@ -41,6 +40,7 @@ Planned structure is as follows:
 * Common concepts
   * [Context](context.md)
   * [Configuration](configuration.md)
+  * [Serialization](serialization.md)  
 * Identity & Authentication
   * Authenticating with Azure Stack
   * Troubleshooting authentication issues
