@@ -1,4 +1,4 @@
-# Authenticating with Azure in Developer Environment
+# Azure Authentication in Development Environments
 
 The Azure Identity library provides Azure Active Directory token authentication support for applications running locally on developer machines through a a set of TokenCredential implementations.
 
@@ -11,6 +11,8 @@ The Azure Identity library provides Azure Active Directory token authentication 
 
 ## Device Code Credential
 The Device Code Credential interactively authenticates a user on devices with limited UI. When the applicatio runs and requests authentication via Device Code Credential, the user is then asked to visit the login URL on any browser supported machine. The user then enters the device code mentioned in the instructions along with their login credentials. Upon successful authentication, the application that requested authentiation gets authenticated successfully on the device its running on.
+
+More conceptual details can be found here for [Device code authentication](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
 
 
 ### Enable applications for device code flow
@@ -68,16 +70,16 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate interactively in the browser.
 */
 public void createInteractiveBrowserCredential() {
-InteractiveBrowserCredential interactiveBrowserCredential = new InteractiveBrowserCredentialBuilder()
-  .clientId("<YOUR CLIENT ID>")
-  .redirectUrl("http://localhost:8765")
-  .build();
+  InteractiveBrowserCredential interactiveBrowserCredential = new InteractiveBrowserCredentialBuilder()
+    .clientId("<YOUR CLIENT ID>")
+    .redirectUrl("http://localhost:8765")
+    .build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(interactiveBrowserCredential)
-  .buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(interactiveBrowserCredential)
+    .buildClient();
 }
 ```
 
@@ -124,13 +126,13 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate with Azure CLI.
 */
 public void createAzureCliCredential() {
-AzureCliCredential cliCredential = new AzureCliCredentialBuilder().build();
+  AzureCliCredential cliCredential = new AzureCliCredentialBuilder().build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(cliCredential)
-  .buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(cliCredential)
+    .buildClient();
 }
 ```
 
@@ -156,16 +158,16 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate with IntelliJ IDEA.
 */
 public void createIntelliJCredential() {
-IntelliJCredential intelliJCredential = new IntelliJCredentialBuilder()
-  // KeePass configuration required only for Windows. No configuration needed for Linux / Mac
-  .keePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
-  .build();
+  IntelliJCredential intelliJCredential = new IntelliJCredentialBuilder()
+    // KeePass configuration required only for Windows. No configuration needed for Linux / Mac
+    .keePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
+    .build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(intelliJCredential)
-  .buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(intelliJCredential)
+    .buildClient();
 }
 ```
 
@@ -187,13 +189,13 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate with Visual Studio Code.
 */
 public void createVisualStudioCodeCredential() {
-VisualStudioCodeCredential visualStudioCodeCredential = new VisualStudioCodeCredentialBuilder().build();
+  VisualStudioCodeCredential visualStudioCodeCredential = new VisualStudioCodeCredentialBuilder().build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-  .credential(visualStudioCodeCredential)
-  .buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(visualStudioCodeCredential)
+    .buildClient();
 }
 ```
 

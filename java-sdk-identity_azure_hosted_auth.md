@@ -37,18 +37,65 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * If environment configuration is incomplete, it will try managed identity.
 */
 public void createDefaultAzureCredential() {
-DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().build();
+  DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(defaultCredential)
-.buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(defaultCredential)
+    .buildClient();
+}
+```
+
+### Authenticating a user assigned managed identity with `DefaultAzureCredential`
+This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, deployed to an Azure resource with a user assigned managed identity configured.
+
+See more about how to configure a user assigned managed identity for an Azure resource in [Enable managed identity for Azure resources](#configure-managedidentitycredential).
+
+```java
+/**
+* The default credential will use the user assigned managed identity with the specified client ID.
+*/
+public void createDefaultAzureCredentialForUserAssignedManagedIdentity() {
+  DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
+    .managedIdentityClientId("<MANAGED_IDENTITY_CLIENT_ID>")
+    .build();
+
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(defaultCredential)
+    .buildClient();
+}
+```
+
+### Authenticating a user in Azure Toolkit for IntelliJ with `DefaultAzureCredential`
+This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, on a workstation with IntelliJ IDEA installed, and the user has signed in with an Azure account to the Azure Toolkit for IntelliJ.
+
+See more about how to configure your IntelliJ IDEA in [Sign in Azure Toolkit for IntelliJ for IntelliJCredential](./java-sdk-identity_dev_env_auth.md#sign-in-azure-toolkit-for-intellij-for-intellijcredential).
+
+```java
+/**
+* The default credential will use the KeePass database path to find the user account in IntelliJ on Windows.
+*/
+public void createDefaultAzureCredentialForIntelliJ() {
+  DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
+  // KeePass configuration required only for Windows. No configuration needed for Linux / Mac
+    .intelliJKeePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
+    .build();
+
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+    .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+    .credential(defaultCredential)
+    .buildClient();
 }
 ```
 
 ## Managed Identity Credential
-The Managed Identity authenticates the managed identity (system or user assigned) of an Azure resource. So, if the application is running inside an Azure resource that supports Managed Identity through `IDENTITY/MSI` and/or `IMDS` endpoints, then this credential will get your application authenticated and offers a great secretless authentication experience.
+The Managed Identity authenticates the managed identity (system or user assigned) of an Azure resource. So, if the application is running inside an Azure resource that supports Managed Identity through `IDENTITY/MSI` and/or `IMDS` endpoints, then this credential will get your application authenticated and offers a great secretless authentication experience. 
+
+More condeptual details can be found here for [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview).
 
 ### Configure `ManagedIdentityCredential`
 
@@ -76,15 +123,15 @@ This examples demonstrates authenticating the `SecretClient` from the [azure-sec
 * Authenticate with a managed identity.
 */
 public void createManagedIdentityCredential() {
-ManagedIdentityCredential managedIdentityCredential = new ManagedIdentityCredentialBuilder()
-.clientId("<USER ASSIGNED MANAGED IDENTITY CLIENT ID>") // only required for user assigned
-.build();
+  ManagedIdentityCredential managedIdentityCredential = new ManagedIdentityCredentialBuilder()
+  .clientId("<USER ASSIGNED MANAGED IDENTITY CLIENT ID>") // only required for user assigned
+  .build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(managedIdentityCredential)
-.buildClient();
+  // Azure SDK client builders accept the credential as a parameter
+  SecretClient client = new SecretClientBuilder()
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(managedIdentityCredential)
+  .buildClient();
 }
 ```
 

@@ -10,6 +10,7 @@ The Azure Identity library provides Azure Active Directory token authentication 
 ## Device Code Credential
 The Device Code Credential interactively authenticates a user on devices with limited UI. When the applicatio runs and requests authentication via Device Code Credential, the user is then asked to visit the login URL on any browser supported machine. The user then enters the device code mentioned in the instructions along with their login credentials. Upon successful authentication, the application that requested authentiation gets authenticated successfully on the device its running on.
 
+More conceptual details can be found here for [Device code authentication](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
 
 ### Enable applications for device code flow
 In order to authenticate a user through device code flow, you need to:
@@ -34,17 +35,17 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate with device code credential.
 */
 public void createDeviceCodeCredential() {
-DeviceCodeCredential deviceCodeCredential = new DeviceCodeCredentialBuilder()
-    .challengeConsumer(challenge -> {
-    // lets user know of the challenge
-    System.out.println(challenge.getMessage());
-    }).build();
+    DeviceCodeCredential deviceCodeCredential = new DeviceCodeCredentialBuilder()
+        .challengeConsumer(challenge -> {
+        // lets user know of the challenge
+        System.out.println(challenge.getMessage());
+        }).build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-    .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
-    .credential(deviceCodeCredential)
-    .buildClient();
+    // Azure SDK client builders accept the credential as a parameter
+    SecretClient client = new SecretClientBuilder()
+        .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
+        .credential(deviceCodeCredential)
+        .buildClient();
 }
 ```
 
@@ -66,38 +67,40 @@ This example demonstrates authenticating the `SecretClient` from the [azure-secu
 * Authenticate interactively in the browser.
 */
 public void createInteractiveBrowserCredential() {
-InteractiveBrowserCredential interactiveBrowserCredential = new InteractiveBrowserCredentialBuilder()
-    .clientId("<YOUR_APP_CLIENT ID>")
-    .redirectUrl("YOUR_APP_REGISTERED_REDIRECT_URL")
-    .build();
+    InteractiveBrowserCredential interactiveBrowserCredential = new InteractiveBrowserCredentialBuilder()
+        .clientId("<YOUR_APP_CLIENT ID>")
+        .redirectUrl("YOUR_APP_REGISTERED_REDIRECT_URL")
+        .build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-    .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
-    .credential(interactiveBrowserCredential)
-    .buildClient();
+    // Azure SDK client builders accept the credential as a parameter
+    SecretClient client = new SecretClientBuilder()
+        .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
+        .credential(interactiveBrowserCredential)
+        .buildClient();
 }
 ```
 
 ## Username Password Credential
 The `UsernamePasswordCredential` helps to authenticate a public client application using the user credentials that don't require multi factor authentication. This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `UsernamePasswordCredential`. The user must **not** have Multi-factor auth turned on.
 
+More conceptual details can be found here for [Username + password authentication](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth-ropc).
+
 ```java
 /**
 * Authenticate with username, password.
 */
 public void createUserNamePasswordCredential() {
-UsernamePasswordCredential usernamePasswordCredential = new UsernamePasswordCredentialBuilder()
-    .clientId("<YOUR_APP_CLIENT_ID>")
-    .username("<YOUR_USERNAME>")
-    .password("<YOUR_PASSWORD>")
-    .build();
+    UsernamePasswordCredential usernamePasswordCredential = new UsernamePasswordCredentialBuilder()
+        .clientId("<YOUR_APP_CLIENT_ID>")
+        .username("<YOUR_USERNAME>")
+        .password("<YOUR_PASSWORD>")
+        .build();
 
-// Azure SDK client builders accept the credential as a parameter
-SecretClient client = new SecretClientBuilder()
-    .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
-    .credential(usernamePasswordCredential)
-    .buildClient();
+    // Azure SDK client builders accept the credential as a parameter
+    SecretClient client = new SecretClientBuilder()
+        .vaultUrl("https://{YOUR_KEY_VAULT_NAME}.vault.azure.net")
+        .credential(usernamePasswordCredential)
+        .buildClient();
 }
 ```
 
