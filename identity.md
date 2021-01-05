@@ -20,7 +20,6 @@ This library currently supports:
 
 Maven dependency for Azure Secret Client library. Add it to your project's pom file.
 
-[//]: # ({x-version-update-start;com.azure:azure-identity;current})
 ```xml
 <dependency>
 <groupId>com.azure</groupId>
@@ -28,7 +27,6 @@ Maven dependency for Azure Secret Client library. Add it to your project's pom f
 <version>1.2.1</version>
 </dependency>
 ```
-[//]: # ({x-version-update-end})
 
 ### Prerequisites
 * A [Java Development Kit (JDK)][jdk_link], version 8 or later.
@@ -37,14 +35,7 @@ Maven dependency for Azure Secret Client library. Add it to your project's pom f
 
 ### Authenticate the client
 
-When debugging and executing code locally it is typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools which can be used to perform this authentication in your development environment:
-
-- [Azure Toolkit for IntelliJ](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#sign-in-azure-toolkit-for-intellij-for-intellijcredential)
-- [Visual Studio Code Azure Account Extension](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#sign-in-visual-studio-code-azure-account-extension-for-visualstudiocodecredential)
-- [Azure CLI](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#sign-in-azure-cli-for-azureclicredential)
-- [Visual Studio 2019 (Shared token cache)](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#enable-applications-for-shared-token-cache-credential)
-
-Click on each item above to learn about how to configure them for Azure Identity authentication.
+When debugging and executing code locally it is typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools which can be used to perform this authentication in your development environment. You can find instructions here to [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
 
 ## Key concepts
 ### Credentials
@@ -67,12 +58,17 @@ The `DefaultAzureCredential` is appropriate for most scenarios where the applica
 - Azure CLI - If the developer has authenticated an account via the Azure CLI `az login` command, the `DefaultAzureCredential` will authenticate with that account.
 
 ## Examples
-You can find more examples of using various credentials in [Azure Identity Examples Wiki page](https://github.com/Azure/azure-sdk-for-java/wiki/Azure-Identity-Examples). 
+You can find more examples of authenticating with different Token Credentials below:
+
+* [Authenticate with Azure in Developer Environment](./identity_env_auth.md)
+* [Authenticate with Service Principal](./identity_service_principal_auth.md)
+* [Authenticate applications hosted in Azure](./identity_azure_hosted_auth.md)
+* [Authenticate with User Credentials](./identity_user_auth.md)
+
 
 ### Authenticating with `DefaultAzureCredential`
 This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`. There's also [a compilable sample](https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/keyvault/azure-security-keyvault-secrets/src/samples/java/com/azure/security/keyvault/secrets/IdentityReadmeSamples.java) to create a Key Vault secret client you can copy-paste.
 
-<!-- embedme ../../keyvault/azure-security-keyvault-secrets/src/samples/java/com/azure/security/keyvault/secrets/IdentityReadmeSamples.java#L40-L52 -->
 ```java
 /**
 * The default credential first checks environment variables for configuration.
@@ -83,18 +79,18 @@ DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().b
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(defaultCredential)
-.buildClient();
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(defaultCredential)
+  .buildClient();
 }
 ```
 
-See more how to configure the `DefaultAzureCredential` on your workstation or Azure in [Configure DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#configure-defaultazurecredential).
+See more how to configure the `DefaultAzureCredential` on your workstation or Azure in [Configure DefaultAzureCredential](./identity_azure_hosted_auth.md#configure-defaultazurecredential).
 
 ### Authenticating a user assigned managed identity with `DefaultAzureCredential`
 This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, deployed to an Azure resource with a user assigned managed identity configured.
 
-See more about how to configure a user assigned managed identity for an Azure resource in [Enable managed identity for Azure resources](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#enable-managed-identity-for-azure-resources).
+See more about how to configure a user assigned managed identity for an Azure resource in [Enable managed identity for Azure resources](./identity_azure_hosted_auth.md#configure-managedidentitycredential).
 
 ```java
 /**
@@ -102,21 +98,21 @@ See more about how to configure a user assigned managed identity for an Azure re
 */
 public void createDefaultAzureCredentialForUserAssignedManagedIdentity() {
 DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
-.managedIdentityClientId("<MANAGED_IDENTITY_CLIENT_ID>")
-.build();
+  .managedIdentityClientId("<MANAGED_IDENTITY_CLIENT_ID>")
+  .build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(defaultCredential)
-.buildClient();
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(defaultCredential)
+  .buildClient();
 }
 ```
 
 ### Authenticating a user in Azure Toolkit for IntelliJ with `DefaultAzureCredential`
 This example demonstrates authenticating the `SecretClient` from the [azure-security-keyvault-secrets][secrets_client_library] client library using the `DefaultAzureCredential`, on a workstation with IntelliJ IDEA installed, and the user has signed in with an Azure account to the Azure Toolkit for IntelliJ.
 
-See more about how to configure your IntelliJ IDEA in [Sign in Azure Toolkit for IntelliJ for IntelliJCredential](https://github.com/Azure/azure-sdk-for-java/wiki/Set-up-Your-Environment-for-Authentication#sign-in-azure-toolkit-for-intellij-for-intellijcredential).
+See more about how to configure your IntelliJ IDEA in [Sign in Azure Toolkit for IntelliJ for IntelliJCredential](./identity_env_auth.md#sign-in-azure-toolkit-for-intellij-for-intellijcredential).
 
 ```java
 /**
@@ -125,14 +121,14 @@ See more about how to configure your IntelliJ IDEA in [Sign in Azure Toolkit for
 public void createDefaultAzureCredentialForIntelliJ() {
 DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder()
 // KeePass configuration required only for Windows. No configuration needed for Linux / Mac
-.intelliJKeePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
-.build();
+  .intelliJKeePassDatabasePath("C:\\Users\\user\\AppData\\Roaming\\JetBrains\\IdeaIC2020.1\\c.kdbx")
+  .build();
 
 // Azure SDK client builders accept the credential as a parameter
 SecretClient client = new SecretClientBuilder()
-.vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
-.credential(defaultCredential)
-.buildClient();
+  .vaultUrl("https://{YOUR_VAULT_NAME}.vault.azure.net")
+  .credential(defaultCredential)
+  .buildClient();
 }
 ```
 
@@ -236,4 +232,3 @@ describes why the credential is unavailable for authentication execution . When 
 [javadoc]: https://azure.github.io/azure-sdk-for-java
 [jdk_link]: https://docs.microsoft.com/java/azure/jdk/?view=azure-java-stable
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-java%2Fsdk%2Fidentity%2Fazure-identity%2FREADME.png)
