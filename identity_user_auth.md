@@ -1,4 +1,4 @@
-# Authenticating applications with User Credentials
+# Authenticating with User Credentials
 
 The Azure Identity library provides Azure Active Directory token authentication support for applications running locally on developer machines through a a set of TokenCredential implementations.
 
