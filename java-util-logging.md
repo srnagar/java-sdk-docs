@@ -52,7 +52,7 @@ java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$s] %5$s %n
 
 ### Log to a file
 
-In the examples above, logging was to the console, which is not normally the preferred location for logs. To configure logging to a file instead, which will be rolled over after hourly, and archived in gzip format, the following configuration will suffice:
+In the examples above, logging was to the console, which is not normally the preferred location for logs. To configure logging to a file instead, use the following configuration:
 
 ```
 handlers = java.util.logging.FileHandler
